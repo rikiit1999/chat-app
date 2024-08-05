@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 
-const PORT = 3003; // Port for message service
+const PORT = 3003; 
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://itrikiatt:itrikiatt@cluster0.jsi3wz1.mongodb.net/chat-app?retryWrites=true&w=majority&appName=Cluster0', 
@@ -18,6 +19,7 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
+app.use(cors());
 app.use(express.json());
 
 app.post('/messages', async (req, res) => {
