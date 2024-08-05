@@ -29,4 +29,15 @@ app.post('/user', async (req, res) => {
     res.json(newUser);
 });
 
+// Update user status
+app.patch('/users/:username', async (req, res) => {
+    const { online } = req.body;
+    const user = await User.findOneAndUpdate(
+        { username: req.params.username },
+        { online },
+        { new: true }
+    );
+    res.json(user);
+});
+
 app.listen(PORT, () => console.log(`User service running on port ${PORT}`));

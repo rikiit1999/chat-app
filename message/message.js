@@ -19,18 +19,41 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
+// Add user and admin models to check online status
+const User = mongoose.model('User', new mongoose.Schema({
+    username: String,
+    online: Boolean
+}));
+
+const Admin = mongoose.model('Admin', new mongoose.Schema({
+    username: String,
+    online: Boolean
+}));
+
 app.use(cors()); // Add this line
 app.use(express.json());
 
 app.post('/messages', async (req, res) => {
-    try {
-        const newMessage = new Message(req.body);
-        await newMessage.save();
-        res.status(201).json(newMessage);
-    } catch (error) {
-        console.error('Error saving message:', error);
-        res.status(500).send('Error saving message');
+    const { sender, recipient, message } = req.body;
+
+    // Check sender's online status
+    const senderUser = await User.findOne({ username: sender });
+    //const senderAdmin = await Admin.findOne({ username: sender });
+    if (!senderUser || !senderUser.online) {
+        return res.status(400).json({ error: 'Sender is not online or not exists' });
     }
+
+    // Check recipient's online status
+    const recipientUser = await User.findOne({ username: recipient });
+    const recipientAdmin = await Admin.findOne({ username: recipient });
+
+    if ((!recipientUser || !recipientUser.online) && (!recipientAdmin || !recipientAdmin.online)) {
+        return res.status(400).json({ error: 'Recipient is not online' });
+    }
+
+    const newMessage = new Message({ sender, recipient, message });
+    await newMessage.save();
+    res.status(201).json(newMessage);
 });
 
 app.get('/messages/:sender/:recipient', async (req, res) => {
