@@ -4,6 +4,8 @@ async function sendMessage() {
     const message = document.getElementById('message').value;
 
     try{
+        console.log('Sending message:', { sender, recipient, message }); // Log data being sent
+
         const response = await fetch('http://localhost:3003/messages', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -25,8 +27,10 @@ async function sendMessage() {
 async function displayMessages(sender, recipient) {
     try {
         const response = await fetch(`http://localhost:3003/messages/${sender}/${recipient}`);
+        console.log('Display messages response status:', response.status); // Log response status
 
     if (!response.ok) {
+        const errorText = await response.text();
         throw new Error('Network response was not ok');
     }
 
