@@ -29,4 +29,15 @@ app.post('/admin', async (req, res) => {
     res.json(newAdmin);
 });
 
+// Update admin status
+app.patch('/admins/:username', async (req, res) => {
+    const { online } = req.body;
+    const user = await Admin.findOneAndUpdate(
+        { username: req.params.username },
+        { online },
+        { new: true }
+    );
+    res.json(user);
+});
+
 app.listen(PORT, () => console.log(`Admin service running on port ${PORT}`));
