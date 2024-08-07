@@ -12,5 +12,10 @@
   "devDependencies": {
     "express": "^4.19.2",
     "mongoose": "^8.5.2"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "salt": "^0.5.5"
   }
 }

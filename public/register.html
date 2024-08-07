@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,23 +14,23 @@
             margin: 0;
             background-color: #f0f0f0;
         }
-        .login-container {
+        .register-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .login-container h2 {
+        .register-container h2 {
             margin-bottom: 20px;
         }
-        .login-container input {
+        .register-container input {
             width: 100%;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .login-container button {
+        .register-container button {
             width: 100%;
             padding: 10px;
             border: none;
@@ -39,7 +39,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        .login-container button:hover {
+        .register-container button:hover {
             background-color: #218838;
         }
         .error {
@@ -49,14 +49,15 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
+    <div class="register-container">
+        <h2>Register</h2>
         <input type="text" id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
-        <button onclick="login()">Login</button>
-        <p>Don't have an account? <a href="register.html">Register here</a></p>
+        <button onclick="register()">Register</button>
+        <p>Already have an account? <a href="index.html">Login here</a></p>
         <div id="error" class="error"></div>
     </div>
-    <script src="login.js"></script>    
+
+    <script src="register.js"></script> 
 </body>
 </html>
