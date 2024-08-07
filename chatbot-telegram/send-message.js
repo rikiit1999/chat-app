@@ -9,7 +9,9 @@ async function sendMessage() {
     }
 
     const botToken = '7000165352:AAGZhWEzFMCSbLLNW-uKPjx0S0BptCzMI9A'; // RIKI_BOT
-    const chatId = '7098096854'; // Replace with your chat ID
+    //const chatId = '7098096854'; // Replace with group chat ID
+    //const chatId = '-1002229716632'; // Replace with group chat ID
+    const chatId = '-1002229716632';
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
