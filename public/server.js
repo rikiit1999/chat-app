@@ -55,6 +55,34 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Regist route
+app.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required' });
+    }
+
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user
+        const newUser = new User({ username, password: hashedPassword });
+        await newUser.save();
+
+        res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
