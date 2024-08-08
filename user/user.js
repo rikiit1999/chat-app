@@ -10,16 +10,7 @@ mongoose.connect('mongodb+srv://itrikiatt:itrikiatt@cluster0.jsi3wz1.mongodb.net
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-// Define a User model
-const userSchema = new mongoose.Schema({
-    //username: String,
-    username: { type: String, required: true, unique: true },
-    //password: String,
-    password: { type: String, required: true },
-    online: Boolean
-});
-
-const User = mongoose.model('User', userSchema);
+const User = require('./models/User');
 
 app.use(express.json());
 

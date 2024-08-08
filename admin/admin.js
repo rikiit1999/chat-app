@@ -9,12 +9,7 @@ mongoose.connect('mongodb+srv://itrikiatt:itrikiatt@cluster0.jsi3wz1.mongodb.net
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-const adminSchema = new mongoose.Schema({
-    username: String,
-    online: Boolean
-});
-
-const Admin = mongoose.model('Admin', adminSchema);
+const Admin = require('./models/Admin');
 
 app.use(express.json());
 
