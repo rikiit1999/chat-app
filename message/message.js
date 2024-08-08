@@ -1,36 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const app = express();
+const { Message, User, Admin } = require('./models/Message');  // Import models
 
-const PORT = 3003; 
+const app = express();
+const PORT = 3003;
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://itrikiatt:itrikiatt@cluster0.jsi3wz1.mongodb.net/chat-app?retryWrites=true&w=majority&appName=Cluster0', 
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-const messageSchema = new mongoose.Schema({
-    sender: String,
-    recipient: String,
-    message: String,
-    timestamp: { type: Date, default: Date.now }
-});
-
-const Message = mongoose.model('Message', messageSchema);
-
-// Add user and admin models to check online status
-const User = mongoose.model('User', new mongoose.Schema({
-    username: String,
-    online: Boolean
-}));
-
-const Admin = mongoose.model('Admin', new mongoose.Schema({
-    username: String,
-    online: Boolean
-}));
-
-app.use(cors()); // Add this line
+app.use(cors());
 app.use(express.json());
 
 app.post('/messages', async (req, res) => {
@@ -38,7 +19,6 @@ app.post('/messages', async (req, res) => {
 
     // Check sender's online status
     const senderUser = await User.findOne({ username: sender });
-    //const senderAdmin = await Admin.findOne({ username: sender });
     if (!senderUser || !senderUser.online) {
         return res.status(400).json({ error: 'Sender is not online or not exists' });
     }
