@@ -2,13 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const app = express();
+require('dotenv').config();
 
 const PORT = 3001; // Port for user service
 
+// Access mongodb using this connection string
+const abc = process.env.CONNECTION_URL;
+
+console.log('Security connection_url: ', abc);
+
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://itrikiatt:itrikiatt@cluster0.jsi3wz1.mongodb.net/chat-app?retryWrites=true&w=majority&appName=Cluster0', 
-    { useNewUrlParser: true, useUnifiedTopology: true }
-);
+// mongoose.connect(connection_url, 
+//     { useNewUrlParser: true, useUnifiedTopology: true }
+// );
+
+
 
 const User = require('./models/User');
 

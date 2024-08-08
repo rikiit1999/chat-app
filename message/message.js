@@ -1,13 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config();
 const { Message, User, Admin } = require('./models/Message');  // Import models
 
 const app = express();
 const PORT = 3003;
 
+// Access mongodb using this connection string
+const connection_url = process.env.MONGODB_CONNECTION_URL;
+
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://itrikiatt:itrikiatt@cluster0.jsi3wz1.mongodb.net/chat-app?retryWrites=true&w=majority&appName=Cluster0', 
+mongoose.connect(connection_url, 
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
