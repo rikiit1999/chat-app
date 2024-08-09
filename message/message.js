@@ -8,7 +8,8 @@ const app = express();
 const PORT = 3003;
 
 // Access mongodb using this connection string
-const connection_url = process.env.MONGODB_CONNECTION_URL;
+const connection_url = process.env.CONNECTION_URL;
+console.log('connection_url: ', connection_url);
 
 // Connect to MongoDB
 mongoose.connect(connection_url, 

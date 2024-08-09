@@ -6,7 +6,7 @@ require('dotenv').config();
 const PORT = 3002; // Port for admin service
 
 // Access mongodb using this connection string
-const connection_url = process.env.MONGODB_CONNECTION_URL;
+const connection_url = process.env.CONNECTION_URL;
 
 // Connect to MongoDB
 mongoose.connect(connection_url, 
