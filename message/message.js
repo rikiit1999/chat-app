@@ -3,9 +3,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const { routeMessageToAdmin } = require('./handleMessage.js');
 
 // Import models
-const { Message, User, Admin } = require('./models/Message');
+const { Message, User } = require('./models/Message');
 
 const app = express();
 const PORT = 3003;
@@ -19,38 +20,6 @@ mongoose.connect(connection_url, { useNewUrlParser: true, useUnifiedTopology: tr
 
 app.use(cors());
 app.use(express.json());
-
-// Track online admins
-let onlineAdmins = [];
-
-// Update online admins list
-async function updateOnlineAdmins() {
-    try {
-        const admins = await Admin.find({ online: true });
-        onlineAdmins = admins.map(admin => admin.username);
-    } catch (error) {
-        console.error('Error updating online admins:', error);
-    }
-}
-
-// Periodically update the list of online admins
-updateOnlineAdmins();
-setInterval(updateOnlineAdmins, 60000); // Update every minute
-
-// Route messages to an available admin
-async function routeMessageToAdmin(sender, messageContent) {
-    if (onlineAdmins.length === 0) {
-        throw new Error('No admins available');
-    }
-
-    // Round-robin approach to select an admin
-    const recipient = onlineAdmins.shift(); // Get the first admin in the list
-    onlineAdmins.push(recipient); // Add them back to the end of the list
-
-    const newMessage = new Message({ sender, recipient, message: messageContent });
-    await newMessage.save();
-    return newMessage;
-}
 
 // Handle sending messages
 app.post('/messages', async (req, res) => {
