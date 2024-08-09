@@ -1,13 +1,10 @@
-cd \public and http-server
-npm start  every single services
-
 cd admin\
 npm start
 
-cd message\
+cd user\
 npm start
 
-cd user\
+cd message\
 npm start
 
 cd public\

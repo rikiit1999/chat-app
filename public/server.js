@@ -4,16 +4,19 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
 const JWT_SECRET = 'riki_jwt_secret';
 
+// Access mongodb using this connection string
+const connection_url = process.env.CONNECTION_URL;
+
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://itrikiatt:itrikiatt@cluster0.jsi3wz1.mongodb.net/chat-app?retryWrites=true&w=majority&appName=Cluster0', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(connection_url, 
+    { useNewUrlParser: true, useUnifiedTopology: true }
+);
 
 // Define a User model
 const UserSchema = new mongoose.Schema({
